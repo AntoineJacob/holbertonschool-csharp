@@ -3,54 +3,79 @@ using Text;
 
 namespace Text.Tests
 {
-	[TestFixture]
+    [TestFixture]
     public class Tests
     {
         [Test]
-        public void Unique()
+        public void TestTrue()
         {
-			string test = "uniq";
-			int result = Str.UniqueChar(test);
-            Assert.AreEqual(0, result);
+			string test = "beeb";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
         }
 
         [Test]
-        public void UniqueNotUnique()
+        public void TestFalse()
         {
-			string test = "sodsodsod";
-			int result = Str.UniqueChar(test);
-            Assert.AreEqual(-1, result);
-        }
+			string test = "Panama";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsFalse(result);
+		}
 
         [Test]
-        public void UniqueEmpty()
+        public void TestEspecialCharacters()
+        {
+			string test = "A man, a plan, a canal: Panama.";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
+		}
+
+        [Test]
+        public void TestEmptyString()
         {
 			string test = "";
-			int result = Str.UniqueChar(test);
-            Assert.AreEqual(-1, result);
-        }
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
+		}
 
         [Test]
-        public void UniqueOneChar()
+        public void TestUpperCase()
         {
-			string test = "a";
-			int result = Str.UniqueChar(test);
-            Assert.AreEqual(0, result);
-        }
+			string test = "Racecar";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
+		}
 
         [Test]
-        public void UniqueLast()
+        public void TestNumber()
         {
-			string test = "hihililia";
-			int result = Str.UniqueChar(test);
-            Assert.AreEqual(8, result);
-        }
+			string test = "21012";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
+		}
 
         [Test]
-        public void UniqueNull()
+        public void TestNumberFalse()
         {
-			int result = Str.UniqueChar(null);
-            Assert.AreEqual(-1, result);
-        }
+			string test = "1012";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsFalse(result);
+		}
+
+        [Test]
+        public void TestUpperCaseFalse()
+        {
+			string test = "HIjihJ";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsFalse(result);
+		}
+
+        [Test]
+        public void TestNumbersLetters()
+        {
+			string test = "HI44ih";
+			bool result = Str.IsPalindrome(test);
+            Assert.IsTrue(result);
+		}
     }
 }

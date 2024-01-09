@@ -1,34 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿﻿using System;
+using System.Text.RegularExpressions;
 
 namespace Text
 {
-	/// <summary>Contains multiple methods for managing strings.</summary>
+	/// <summary>Contains multiple methods to evaluate strings.</summary>
     public class Str
     {
-		/// <summary>Finds the first unique char in the string.</summary>
-		/// <returns>The first unique char index or -1 if not found.</returns>
-		public static int UniqueChar(string s)
+		/// <summary>Cleans a string by removing special characters</summary>
+		/// <returns>return a string without any special character.</returns>
+		public static string CleanString(string s)
 		{
-			if (s == null)
-				return -1;
+			string result = Regex.Replace(s, @"[^A-Za-z0-9]", "");
+			return result;
+		}
 
-			List<char> CharArray = s.ToList();
-			List<char> Removed = new List<char>();
-			char temp = '\0';
+		/// <summary>Check if a string is palindrome</summary>
+		/// <returns>return true if the string is palindrome, false otherwise</returns>
+		public static bool IsPalindrome(string s)
+		{
+			// Clean the string by removing special characters
+			string Result = CleanString(s.ToLower());
 
-			for (int i = 0; i < s.Length; i++)
-			{
-				temp = s[i];
-				CharArray.RemoveAt(0);
+			// turn result into an array and reverse it
+			char[] CharArray = Result.ToCharArray();
+			Array.Reverse(CharArray);
 
-				if (!Removed.Contains(temp) && !CharArray.Contains(temp))
-					return i;
+			// turn reversed into a string
+			string Reversed = new String(CharArray);
 
-				Removed.Add(temp);
-			}
-			return -1;
+			// check if the result is equal to the reversed string
+			if (Result.Equals(Reversed))
+				return true;
+
+			return false;
 		}
     }
 }
