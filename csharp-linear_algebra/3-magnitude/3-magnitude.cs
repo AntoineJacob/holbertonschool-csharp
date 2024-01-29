@@ -13,16 +13,24 @@ class VectorMath
     /// <returns></returns>
     public static double Magnitude(double[] vector)
     {
-        if (vector.Length != 2)
+    int dimensions = vector.Length;
+
+        if (dimensions != 2 && dimensions != 3)
         {
-            throw new ArgumentException("Vector must be 2-dimensional.");
+            return -1; // Invalid vector dimension
         }
 
-        double x = vector[0];
-        double y = vector[1];
+        double sumOfSquares = 0;
 
-        // Pythagorean theorem: length = sqrt(x^2 + y^2)
-        double length = Math.Sqrt(x * x + y * y);
+        foreach (double component in vector)
+        {
+            sumOfSquares += component * component;
+        }
+
+        double length = Math.Sqrt(sumOfSquares);
+
+        // Round to the nearest hundredth
+        length = Math.Round(length, 2);
 
         return length;
     }
