@@ -1,57 +1,21 @@
 ﻿using System;
 
-/// <summary>
-/// Class MatrixMath
-/// </summary>
+///<summary>Class matrixmath</summary>
 class MatrixMath
 {
-    /// <summary>
-    ///  Method that rotates a square 2D matrix by a given angle in radians and returns the resulting matrix.
-    /// </summary>
-    /// <param name="matrix"></param>
-    /// <param name="angle"></param>
-    /// <returns></returns>
-    public static double[,] Rotate2D(double[,] matrix, double angle)
-    {
-        int rows = matrix.GetLength(0);
-        int columns = matrix.GetLength(1);
+	///<summary>matrix rotation</summary>
+	///<return>transformedPoint</return>
+	public static double[,] Rotate2D(double[,] matrix, double angle)
+	{
+		if (matrix.GetLength(1) > 2)
+			return new double[,] { { -1 } };
+		double[,] rotationMatrix = {{Math.Cos(angle), Math.Sin(angle)}, {-1 * Math.Sin(angle), Math.Cos(angle)}};
+		double[,] transformedPoint = new double[2, 2];
 
-        // Check if the matrix is square
-        if (rows != columns)
-        {
-            // Return a matrix containing -1 for invalid rotation
-            return new double[,] { { -1 } };
-        }
-
-        double[,] result = new double[rows, columns];
-
-        double cosTheta = Math.Cos(angle);
-        double sinTheta = Math.Sin(angle);
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                // Apply rotation formula to each element
-                result[i, j] = matrix[i, j] * cosTheta - matrix[i, j] * sinTheta;
-            }
-        }
-
-        return result;
-    }
-
-    public static void PrintMatrix(double[,] matrix)
-    {
-        int rows = matrix.GetLength(0);
-        int columns = matrix.GetLength(1);
-
-        for (int i = 0; i < rows; i++)
-        {
-            for (int j = 0; j < columns; j++)
-            {
-                Console.Write($"{matrix[i, j]} ");
-            }
-            Console.WriteLine();
-        }
-    }
+		for (int i = 0; i < 2; i++)
+			for (int j = 0; j < 2; j++)
+				for (int k = 0; k < 2; k++)
+					transformedPoint[i, j] = Math.Round(transformedPoint[i, j] + (matrix[i, k] * rotationMatrix[k, j]), 2);
+		return transformedPoint;
+	}
 }
